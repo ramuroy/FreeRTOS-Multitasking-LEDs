@@ -1,28 +1,25 @@
-# FreeRTOS LED Blinking with Multitasking
+# 🔴🔵 ESP32 FreeRTOS Multitasking LED Blink 💡⚡
 
-## Description
-This project demonstrates multitasking using FreeRTOS on an ESP32. Two LEDs blink independently at different time intervals, showcasing the real-time task scheduling capabilities of FreeRTOS.
+A simple ESP32 project demonstrating FreeRTOS multitasking by blinking two LEDs at different intervals using ESP-IDF.
 
-## Required Components
-- ESP32 (38-pin) WiFi + Bluetooth NodeMCU-32 Development Board
-- Two LEDs
-- Two Resistors (220Ω)
-- Breadboard
+## 📌 Required Components
+- ESP32 (38-pin) NodeMCU Development Board
+- LEDs (2x, any color)
+- Resistors (220Ω)
 - Jumper Wires
-- ESP-IDF with FreeRTOS
+- Breadboard
+- **ESP-IDF FreeRTOS Software**
 
-## Software Used
-- ESP-IDF FreeRTOS Software
-- Kinemaster (for video editing)
+## 🔧 Wiring Diagram
+| ESP32 GPIO Pin | Component |
+|--------------|-----------|
+| GPIO 18      | LED 1 (+) |
+| GPIO 19      | LED 2 (+) |
+| GND         | LED 1 & LED 2 (-) via resistors |
 
-## Wiring Connections
-| ESP32 Pin | Component |
-|-----------|-----------|
-| GPIO18    | LED1 (+)  |
-| GPIO19    | LED2 (+)  |
-| GND       | LED1 & LED2 (-) via Resistors |
+## 📝 Code
+The FreeRTOS-based code creates two independent tasks that blink LEDs at different intervals.
 
-## Code
 ```c
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
@@ -32,7 +29,8 @@ This project demonstrates multitasking using FreeRTOS on an ESP32. Two LEDs blin
 #define LED1_GPIO 18
 #define LED2_GPIO 19
 
-void blink_led1(void *pvParameter) {
+void blink_task_1(void *pvParameter) {
+    gpio_pad_select_gpio(LED1_GPIO);
     gpio_set_direction(LED1_GPIO, GPIO_MODE_OUTPUT);
     while (1) {
         gpio_set_level(LED1_GPIO, 1);
@@ -42,7 +40,8 @@ void blink_led1(void *pvParameter) {
     }
 }
 
-void blink_led2(void *pvParameter) {
+void blink_task_2(void *pvParameter) {
+    gpio_pad_select_gpio(LED2_GPIO);
     gpio_set_direction(LED2_GPIO, GPIO_MODE_OUTPUT);
     while (1) {
         gpio_set_level(LED2_GPIO, 1);
@@ -53,26 +52,27 @@ void blink_led2(void *pvParameter) {
 }
 
 void app_main() {
-    xTaskCreate(&blink_led1, "blink_led1", 1024, NULL, 5, NULL);
-    xTaskCreate(&blink_led2, "blink_led2", 1024, NULL, 5, NULL);
+    xTaskCreate(&blink_task_1, "Blink LED 1", 1024, NULL, 5, NULL);
+    xTaskCreate(&blink_task_2, "Blink LED 2", 1024, NULL, 5, NULL);
 }
 ```
 
-## How to Run
-1. Set up ESP-IDF on your system.
-2. Clone this repository.
-3. Connect your ESP32 to your PC.
-4. Compile and flash the code using:
+## 🚀 How to Run
+1. Install **ESP-IDF** and set up the development environment.
+2. Clone this repository and navigate to the project folder.
+3. Build and flash the code using:
    ```sh
-   idf.py set-target esp32
    idf.py build
    idf.py flash
    idf.py monitor
    ```
-5. Observe the LEDs blinking at different intervals.
+4. Observe the LEDs blinking at different intervals!
 
-## Demo Video
-[Watch Here](#) *(Upload and update the link)*
+## 📽️ Demo Video
+[![Watch the demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://youtu.be/YOUR_VIDEO_ID)
 
-## License
-This project is open-source under the MIT License.
+## 🛠️ License
+This project is open-source and available under the MIT License.
+
+---
+✨ Happy coding with ESP32 & FreeRTOS! 🚀
