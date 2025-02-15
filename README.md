@@ -69,7 +69,7 @@ void app_main() {
 4. Observe the LEDs blinking at different intervals!
 
 ## 📽️ Demo Video
-[![Watch the demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://youtu.be/YOUR_VIDEO_ID)
+[![Watch the demo](wait)
 
 ## 🛠️ License
 This project is open-source and available under the MIT License.
